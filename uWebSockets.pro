@@ -13,7 +13,7 @@ SOURCES += tests/main.cpp \
     src/Socket.cpp \
     src/Group.cpp \
     src/Extensions.cpp \
-    src/libuv_mtcp.cpp
+    src/uUV.cpp
 
 HEADERS += \
     src/WebSocketProtocol.h \
@@ -26,11 +26,11 @@ HEADERS += \
     src/HTTPSocket.h \
     src/uWS.h \
     src/Extensions.h \
-    src/libuv_mtcp.h
+    src/uUV.h
 
-LIBS += -lasan -lssl -lcrypto -lz -lpthread
+LIBS += -lssl -lcrypto -lz -lpthread
 
-QMAKE_CXXFLAGS += -fsanitize=address -Wno-unused-parameter
+QMAKE_CXXFLAGS += -Wno-unused-parameter
 QMAKE_CXXFLAGS_RELEASE -= -O1
 QMAKE_CXXFLAGS_RELEASE -= -O2
 QMAKE_CXXFLAGS_RELEASE *= -O3 -g

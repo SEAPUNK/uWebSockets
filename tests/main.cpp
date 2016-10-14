@@ -87,7 +87,7 @@ void serveBenchmark() {
         ws.send(message, length, opCode);
     });
 
-    h.getDefaultGroup<uWS::SERVER>().startAutoPing(1000);
+    //h.getDefaultGroup<uWS::SERVER>().startAutoPing(1000);
     h.listen(3000);
     h.run();
 }
