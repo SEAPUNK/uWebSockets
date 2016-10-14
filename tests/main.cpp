@@ -599,7 +599,7 @@ void testSmallSends() {
 
 int main(int argc, char *argv[])
 {
-    testSmallSends();
+    /*testSmallSends();
     testSendCallback();
     testMultithreading();
     testReusePort();
@@ -608,11 +608,11 @@ int main(int argc, char *argv[])
     testConnections();
     testListening();
     testBroadcast();
-    stressTest();
+    stressTest();*/
 
     //serveAutobahn();
 
 
     //testAutoPing();
-    //serveBenchmark();
+    serveBenchmark();
 }

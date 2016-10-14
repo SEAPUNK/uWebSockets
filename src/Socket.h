@@ -18,7 +18,7 @@ public:
         SocketData *socketData = getSocketData();
 
         nodeData->asyncMutex->lock();
-        nodeData->transferQueue.push_back({new uv_poll_t, getFd(), socketData, p->poll_cb, cb});
+        nodeData->transferQueue.push_back({new uv_poll_t, getFd(), socketData, p->poll_cb(), cb});
         nodeData->asyncMutex->unlock();
 
         if (socketData->nodeData->tid != nodeData->tid) {
@@ -55,7 +55,7 @@ public:
         uv_fileno((uv_handle_t *) p, (uv_os_fd_t *) &fd);
         return fd;
 #else
-        return p->io_watcher.fd;
+        return p->fd;//p->io_watcher.fd;
 #endif
     }
 
@@ -165,7 +165,7 @@ public:
                         if ((socketData->poll & UV_WRITABLE) && SSL_want(socketData->ssl) != SSL_WRITING) {
                             // todo, remove bit, don't set directly
                             socketData->poll = UV_READABLE;
-                            uv_poll_start(p, UV_READABLE, p->poll_cb);
+                            uv_poll_start(p, UV_READABLE, p->poll_cb());
                         }
                         break;
                     }
@@ -176,7 +176,7 @@ public:
                     case SSL_ERROR_WANT_WRITE:
                         if ((socketData->poll & UV_WRITABLE) == 0) {
                             socketData->poll |= UV_WRITABLE;
-                            uv_poll_start(p, socketData->poll, p->poll_cb);
+                            uv_poll_start(p, socketData->poll, p->poll_cb());
                         }
                         break;
                     default:
@@ -199,7 +199,7 @@ public:
                     case SSL_ERROR_WANT_WRITE:
                         if ((socketData->poll & UV_WRITABLE) == 0) {
                             socketData->poll |= UV_WRITABLE;
-                            uv_poll_start(p, socketData->poll, p->poll_cb);
+                            uv_poll_start(p, socketData->poll, p->poll_cb());
                         }
                         break;
                     default:
@@ -241,7 +241,7 @@ public:
                         if (socketData->messageQueue.empty()) {
                             // todo, remove bit, don't set directly
                             socketData->poll = UV_READABLE;
-                            uv_poll_start(p, UV_READABLE, p->poll_cb);
+                            uv_poll_start(p, UV_READABLE, p->poll_cb());
                             break;
                         }
                     } else if (sent == SOCKET_ERROR) {
@@ -342,7 +342,7 @@ public:
             socketData->nodeData->asyncMutex->unlock();
             uv_async_send(socketData->nodeData->async);
         } else {
-            uv_poll_start(p, socketData->poll, p->poll_cb);
+            uv_poll_start(p, socketData->poll, p->poll_cb());
         }
     }
 

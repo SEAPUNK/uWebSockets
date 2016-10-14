@@ -8,7 +8,7 @@ void NodeData::asyncCallback(uv_async_t *async)
 
     nodeData->asyncMutex->lock();
     for (TransferData transferData : nodeData->transferQueue) {
-        uv_poll_init(nodeData->loop, transferData.p, transferData.fd);
+        uv_poll_init_socket(nodeData->loop, transferData.p, transferData.fd);
         transferData.p->data = transferData.socketData;
         transferData.socketData->nodeData = nodeData;
         uv_poll_start(transferData.p, transferData.socketData->poll, transferData.pollCb);
@@ -18,7 +18,7 @@ void NodeData::asyncCallback(uv_async_t *async)
 
     for (uv_poll_t *p : nodeData->changePollQueue) {
         SocketData *socketData = (SocketData *) p->data;
-        uv_poll_start(p, socketData->poll, p->poll_cb);
+        uv_poll_start(p, socketData->poll, p->poll_cb());
     }
 
     nodeData->changePollQueue.clear();
@@ -35,7 +35,7 @@ Node::Node(int recvLength, int prePadding, int postPadding, bool useDefaultLoop)
     nodeData->tid = pthread_self();
 
     if (useDefaultLoop) {
-        loop = uv_default_loop();
+        loop = uv_loop_new();//uv_default_loop();
     } else {
         loop = uv_loop_new();
     }
@@ -73,9 +73,9 @@ Node::~Node() {
 
     delete nodeData;
 
-    if (loop != uv_default_loop()) {
+    //if (loop != uv_default_loop()) {
         uv_loop_delete(loop);
-    }
+    //}
 }
 
 }

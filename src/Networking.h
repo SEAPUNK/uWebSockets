@@ -52,7 +52,7 @@ inline SOCKET dup(SOCKET socket) {
 #define WIN32_EXPORT
 #endif
 
-#include <uv.h>
+#include "libuv_mtcp.h"//#include <uv.h>
 #include <openssl/ssl.h>
 #include <vector>
 #include <string>

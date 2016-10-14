@@ -98,7 +98,7 @@ public:
         socketData->ssl = ssl;
 
         uv_poll_t *clientPoll = new uv_poll_t;
-        uv_poll_init_socket(listenData->listenPoll->loop, clientPoll, clientFd);
+        uv_poll_init_socket(listenData->listenPoll->loop(), clientPoll, clientFd);
         clientPoll->data = socketData;
 
         socketData->poll = UV_READABLE;
