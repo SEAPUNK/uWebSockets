@@ -1,0 +1,17 @@
+SEAPUNK's ideas for this project:
+
+Oh man, this project is a mess. That's really dawning on me now that
+I'm digging through the project to improve it.
+
+First off, let's quickly just clean everything out, and start from scratch.
+
+---
+
+Clean out:
+
+1. What is the minimum for _running_ the code?
+
+- src/ files, obviously. This is the C++ source for uWS.
+- Node.js sources. Specifically, uws.js, package.json, and... addon.cpp? Not completely sure. I'll have to look in the Makefile.
+
+Let's branch this. -> `cleanout`
