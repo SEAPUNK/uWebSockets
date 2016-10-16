@@ -7,6 +7,14 @@ First off, let's quickly just clean everything out, and start from scratch.
 
 ---
 
+TODO: What is the .gitattributes there for?
+TODO: Investigate the .gitignore contents.
+      Figure out why these directories are ignored.
+TODO: Why are there CMakeLists.txt, uWebSockets.pro, and meson.build all in one?
+
+
+---
+
 Clean out:
 
 1. What is the minimum for _running_ the code?
@@ -15,3 +23,40 @@ Clean out:
 - Node.js sources. Specifically, uws.js, package.json, and... addon.cpp? Not completely sure. I'll have to look in the Makefile.
 
 Let's branch this. -> `cleanout`
+
+========
+CLEANOUT -> Have the bare minimum required to run the node.js module.
+========
+
+Removes:
+
+tests/ directory. These just test the code.
+autobahn/ directory. These are the autobahn results.
+benchmarks/ directory. This runs benchmarks.
+examples/ directory. This provides C++ examples for uWS.
+ssl/ directory. This seems to be generated SSL key/cert for testing.
+autobahn.json. This is the configuration for Autobahn.
+logo.png, for obvious reasons
+README.md, for obvious reasons
+LICENSE, for obvious reasons
+.travis.yml, for obvious reasons
+.gitignore, for obvious reasons
+CMakeLists.txt, meson.build, uWebSockets.pro, as they build just the C++ project
+
+nodejs/
+  client.js -> It's a basic client. Either a test, or an example.
+  echo.js -> It's a basic echo server.
+  ssl.js -> It's a test SSL WS server.
+  test.js -> Another test file, looks like.
+  paths.js -> More tests.
+  tests/ -> Even more tests.
+
+  make.bat and Makefile ->
+    These are build files unnecessary for node.js.
+    node.js comes with node-gyp, and it should handle it all.
+    If there's anything missing, we can have an additional "build script"
+    that does the rest.
+
+- - - - - -
+
+addon.cpp looks like the addon file required.
