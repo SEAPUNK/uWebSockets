@@ -1,7 +1,7 @@
 // This script makes sure that uWS will work.
 // It does it in two steps:
 // - Try to load the existing precompiled addon
-// - Try to build the addon via `npm run build`
+// - If that fails, try to build the addon via `npm run build`
 //
 // Also has some shortcut errors, with friendly error messages.
 'use strict';
