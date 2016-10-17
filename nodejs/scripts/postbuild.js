@@ -4,7 +4,14 @@
 const fs = require('fs');
 const path = require('path');
 
+const platform = process.env.BUILD_PLATFORM;
+const abi = process.env.BUILD_NODE_ABI;
+
+if (!platform || !abi) {
+  throw new Error('No platform or ABI specified in environment variables!');
+}
+
 const fromFile = path.join(__dirname, '../build/Release/uws.node');
-const toFile = path.join(__dirname, `../lib/uws_${process.platform}_${process.versions.modules}.node`);
+const toFile = path.join(__dirname, `../lib/uws_${platform}_${abi}.node`);
 
 fs.renameSync(fromFile, toFile);

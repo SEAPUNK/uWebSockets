@@ -2,9 +2,11 @@
   "name": "uws",
   "version": "0.10.11",
   "scripts": {
-    "build": "node-gyp -C nodejs/ rebuild && node nodejs/scripts/postbuild.js",
+    "build": "node nodejs/scripts/build.js",
+    "build:all": "node nodejs/scripts/build.js all",
+    "build:gyp": "node-gyp --target=$BUILD_NODE_VERSION -C nodejs/ rebuild && node nodejs/scripts/postbuild.js",
     "install": "node nodejs/scripts/install.js",
-    "package": "node nodejs/scripts/package.js",
+    "package": "npm run build:all",
     "prepublish": "(in-publish && npm run package) || in-install"
   },
   "main": "nodejs/lib/uws.js",
@@ -31,5 +33,8 @@
   "devDependencies": {
     "in-publish": "^2.0.0",
     "semistandard": "^9.1.0"
+  },
+  "dependencies": {
+    "minico": "^1.0.1"
   }
 }
