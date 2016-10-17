@@ -5,6 +5,6 @@ const fs = require('fs');
 const path = require('path');
 
 const fromFile = path.join(__dirname, '../build/Release/uws.node');
-const toFile = path.join(__dirname, `../addon/uws_${process.platform}_${process.versions.modules}.node`);
+const toFile = path.join(__dirname, `../lib/uws_${process.platform}_${process.versions.modules}.node`);
 
 fs.renameSync(fromFile, toFile);

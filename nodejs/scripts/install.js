@@ -8,7 +8,7 @@
 
 const childProcess = require('child_process');
 
-const NATIVE_MODULE = require.resolve('../src/native.js');
+const NATIVE_MODULE = require.resolve('../lib/native.js');
 
 // Windows requires node >= 6.4
 // Fast-fail if this requirement is not met.
