@@ -33,8 +33,5 @@
   "devDependencies": {
     "in-publish": "^2.0.0",
     "semistandard": "^9.1.0"
-  },
-  "dependencies": {
-    "minico": "^1.0.1"
   }
 }
