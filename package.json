@@ -2,6 +2,7 @@
   "name": "uws",
   "version": "0.10.11",
   "scripts": {
+    "test": "semistandard",
     "build": "node nodejs/scripts/build.js",
     "build:all": "node nodejs/scripts/build.js all",
     "build:gyp": "node-gyp -C nodejs/ --target=$BUILD_NODE_VERSION rebuild && node nodejs/scripts/postbuild.js",

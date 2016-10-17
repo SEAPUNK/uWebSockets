@@ -1,7 +1,7 @@
 'use strict';
 
 const childProcess = require('child_process');
-const minico = require('./minico');
+const minico = require('./_minico');
 
 function exit (code) {
   // This makes sure everything has been flushed to
