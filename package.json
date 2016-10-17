@@ -2,7 +2,7 @@
   "name": "uws",
   "version": "0.10.11",
   "scripts": {
-    "build": "node-gyp -C nodejs/ rebuild",
+    "build": "node-gyp -C nodejs/ rebuild && node nodejs/scripts/postbuild.js",
     "install": "node nodejs/scripts/install.js",
     "package": "node nodejs/scripts/package.js",
     "prepublish": "(in-publish && npm run package) || in-install"
