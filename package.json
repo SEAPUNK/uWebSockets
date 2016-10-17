@@ -2,7 +2,10 @@
   "name": "uws",
   "version": "0.10.11",
   "scripts": {
-    "install": "node-gyp rebuild > build_log.txt 2>&1 || exit 0"
+    "build": "node-gyp -C nodejs/ rebuild",
+    "install": "node nodejs/scripts/install.js",
+    "package": "node nodejs/scripts/package.js",
+    "prepublish": "(in-publish && npm run package) || in-install"
   },
   "main": "uws.js",
   "description": "Highly scalable WebSocket server & client library",
@@ -24,5 +27,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/uWebSockets/uWebSockets.git"
+  },
+  "devDependencies": {
+    "in-publish": "^2.0.0",
+    "semistandard": "^9.1.0"
   }
 }
