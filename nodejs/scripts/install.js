@@ -32,7 +32,7 @@ try {
   process.exit(0);
 } catch (err) {
   // Try to build the addon.
-  console.log('Prebuilt addon did not work, attempting to build...');
+  console.log('Prebuilt addon unavailable. Attempting to build addon...');
   const buildProcess = childProcess.exec('npm run build', {
     env: process.env,
     timeout: 120000,

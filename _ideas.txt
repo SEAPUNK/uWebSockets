@@ -59,3 +59,8 @@ nodejs/
 - - - - - -
 
 addon.cpp looks like the addon file required.
+node targets:
+
+v4.4.3
+v5.11.0
+v6.0.0
