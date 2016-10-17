@@ -1,3 +1,3 @@
 nodejs/build/
+nodejs/addon/*.node
 node_modules/
-

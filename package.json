@@ -7,7 +7,7 @@
     "package": "node nodejs/scripts/package.js",
     "prepublish": "(in-publish && npm run package) || in-install"
   },
-  "main": "uws.js",
+  "main": "nodejs/src/uws.js",
   "description": "Highly scalable WebSocket server & client library",
   "engines": {
     "node": ">=4"
