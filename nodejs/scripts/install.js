@@ -30,53 +30,59 @@ try {
   require(NATIVE_MODULE);
   console.log('Using prebuilt addon.');
   process.exit(0);
-} catch (err) {
-  // Try to build the addon.
-  console.log('Prebuilt addon unavailable. Attempting to build addon...');
-  const buildProcess = childProcess.exec('npm run build', {
-    env: process.env,
-    timeout: 120000,
-    maxBuffer: 1024 * 1000
-  });
-  buildProcess.stdout.pipe(process.stdout);
-  buildProcess.stderr.pipe(process.stderr);
-  buildProcess.on('error', err => {
-    // We don't want the exit handler code to run.
-    buildProcess.removeAllListeners('exit');
+} catch (err) { }
 
-    console.error('Could not run build script:');
-    console.error(err.stack);
-    // Make sure everything has been flushed.
-    process.stdout.write('', () => {
-      process.exit(1);
+// If that does not work (process will exit with code 0 if it did),
+// then try to build the addon.
+console.log('Prebuilt addon unavailable. Attempting to build addon...');
+const buildProcess = childProcess.exec('npm run build', {
+  env: process.env,
+  timeout: 120000,
+  maxBuffer: 1024 * 1000
+});
+
+// Pipe the child process's stdout and stderr to our stdout and stderr.
+buildProcess.stdout.pipe(process.stdout);
+buildProcess.stderr.pipe(process.stderr);
+
+function exit (code) {
+  // This makes sure everything has been flushed to
+  // stdout and stderr, before exiting.
+  //
+  // Node has this annoying problem where it likes to close the process
+  // before it's finished writing all the data to console.
+  process.stdout.write('', () => {
+    process.stderr.write('', () => {
+      process.exit(code);
     });
   });
-  buildProcess.on('exit', exitCode => {
-    if (exitCode !== 0) {
-      console.error('Build exited with non-0 error code, aborting.');
-      // Make sure everything has been flushed.
-      process.stdout.write('', () => {
-        process.exit(exitCode);
-      });
-    } else {
-      // See if we can load the addon now.
-      // We need to clean the require cache first.
-      delete require.cache[NATIVE_MODULE];
-      try {
-        require(NATIVE_MODULE);
-        console.log('Build successful.');
-        // Make sure everything has been flushed.
-        process.stdout.write('', () => {
-          process.exit(0);
-        });
-      } catch (err) {
-        console.error('Could not require native module after building!');
-        console.error(err.stack);
-        // Make sure everything has been flushed.
-        process.stdout.write('', () => {
-          process.exit(1);
-        });
-      }
-    }
-  });
 }
+
+buildProcess.on('error', err => {
+  // We don't want the exit handler code to run.
+  buildProcess.removeAllListeners('exit');
+
+  console.error('Could not run build script:');
+  console.error(err.stack);
+  return exit(1);
+});
+
+buildProcess.on('exit', exitCode => {
+  if (exitCode !== 0) {
+    console.error('Build exited with non-0 error code, aborting.');
+    return exit(exitCode);
+  } else {
+    // See if we can load the addon now.
+    // We need to clean the require cache first.
+    delete require.cache[NATIVE_MODULE];
+    try {
+      require(NATIVE_MODULE);
+      console.log('Build successful.');
+      return exit(0);
+    } catch (err) {
+      console.error('Could not require native module after building!');
+      console.error(err.stack);
+      return exit(1);
+    }
+  }
+});
