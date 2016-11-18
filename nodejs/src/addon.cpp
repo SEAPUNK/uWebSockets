@@ -1,4 +1,4 @@
-#include "../src/uWS.h"
+#include "../../src/uWS.h"
 #include "addon.h"
 
 void Main(Local<Object> exports) {

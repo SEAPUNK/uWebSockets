@@ -9,3 +9,6 @@ examples/echo
 examples/multithreaded_echo
 build/
 libuWS.*
+
+nodejs/build/
+nodejs/*.node
