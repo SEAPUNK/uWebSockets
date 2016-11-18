@@ -3,8 +3,7 @@
   "version": "0.11.0",
   "scripts": {
     "install": "node nodejs/scripts/check-install.js || npm run build",
-    "build": "node nodejs/scripts/check-build.js && (npm run build:direct || npm run build:gyp)",
-    "build:direct": "",
+    "build": "node nodejs/scripts/check-build.js && npm run build:gyp",
     "build:gyp": "node-gyp -C nodejs/ rebuild"
   },
   "main": "nodejs/lib/uws.js",
